@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -23,8 +22,8 @@ class ConvertVideoForStreaming implements ShouldQueue
     public function handle()
     {
         // create some video formats...
-        $lowBitrateFormat  = (new X264)->setKiloBitrate(500);
-        $midBitrateFormat  = (new X264)->setKiloBitrate(1500);
+        $lowBitrateFormat = (new X264)->setKiloBitrate(500);
+        $midBitrateFormat = (new X264)->setKiloBitrate(1500);
         $highBitrateFormat = (new X264)->setKiloBitrate(3000);
 
         // open the uploaded video from the right disk...
@@ -42,7 +41,7 @@ class ConvertVideoForStreaming implements ShouldQueue
             ->addFormat($highBitrateFormat)
 
             // call the 'save' method with a filename...
-            ->save($this->video->id . '.m3u8');
+            ->save($this->video->id.'.m3u8');
 
         // update the database so we know the convertion is done!
         $this->video->update([

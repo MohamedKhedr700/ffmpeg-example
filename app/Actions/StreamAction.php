@@ -2,10 +2,7 @@
 
 namespace App\Actions;
 
-use FFMpeg\Format\Video\X264;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use ProtoneMedia\LaravelFFMpeg\Support\FFMpeg;
 
 class StreamAction
 {
@@ -27,6 +24,6 @@ class StreamAction
      */
     private function getVideoPath(string $video): string
     {
-        return Storage::path('videos/' . $video . '.m3u8');
+        return Storage::path('videos/'.$video.'.m3u8');
     }
 }

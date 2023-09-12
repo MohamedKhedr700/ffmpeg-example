@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Actions\StreamAction;
-use App\Actions\UploadAction;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class StreamController

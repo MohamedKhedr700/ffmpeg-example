@@ -27,13 +27,13 @@ class UploadAction
         $midBitrate = (new X264)->setKiloBitrate(500);
         $highBitrate = (new X264)->setKiloBitrate(1000);
 
-        FFMpeg::open('videos/' . $file->getClientOriginalName())
+        FFMpeg::open('videos/'.$file->getClientOriginalName())
             ->exportForHLS()
             ->setSegmentLength(10) // optional
             ->setKeyFrameInterval(48) // optional
             ->addFormat($lowBitrate)
 //            ->addFormazt($midBitrate)
 //            ->addFormat($highBitrate)
-            ->save('videos/' . $file->getClientOriginalName() . '.m3u8');
+            ->save('videos/'.$file->getClientOriginalName().'.m3u8');
     }
 }

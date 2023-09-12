@@ -1,10 +1,9 @@
 <?php
 
-use App\Http\Controllers\VideoController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StreamController;
 use App\Http\Controllers\UploadController;
+use App\Http\Controllers\VideoController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------

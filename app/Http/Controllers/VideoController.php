@@ -16,17 +16,17 @@ class VideoController extends Controller
     public function __invoke(StoreVideoRequest $request): JsonResponse
     {
         $video = Video::create([
-            'disk'          => 'videos_disk',
+            'disk' => 'videos_disk',
             'original_name' => $request->file('video')->getClientOriginalName(),
-            'path'          => $request->file('video')->store('videos', 'videos_disk'),
-            'title'         => $request->get('title'),
+            'path' => $request->file('video')->store('videos', 'videos_disk'),
+            'title' => $request->get('title'),
         ]);
 
-//        dispatch(new ConvertVideoForDownloading($video));
-//        dispatch(new ConvertVideoForStreaming($video));
+        //        dispatch(new ConvertVideoForDownloading($video));
+        //        dispatch(new ConvertVideoForStreaming($video));
 
-//        $downloadUrl = Storage::disk('downloadable_videos')->url($video->id . '.mp4');
-//        $streamUrl = Storage::disk('streamable_videos')->url($video->id . '.m3u8');
+        //        $downloadUrl = Storage::disk('downloadable_videos')->url($video->id . '.mp4');
+        //        $streamUrl = Storage::disk('streamable_videos')->url($video->id . '.m3u8');
 
         return response()->json([
             'id' => $video->id,

@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -42,7 +41,7 @@ class ConvertVideoForDownloading implements ShouldQueue
             ->inFormat($lowBitrateFormat)
 
             // call the 'save' method with a filename...
-            ->save($this->video->id . '.mp4');
+            ->save($this->video->id.'.mp4');
 
         // update the database so we know the convertion is done!
         $this->video->update([
