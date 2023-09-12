@@ -13,6 +13,12 @@ class StreamVideoController extends Controller
     {
         $streamUrl = $streamVideoAction->execute($id);
 
-        return redirect($streamUrl);
+//        return redirect($streamUrl);
+
+        return response()->json([
+            'data' => [
+                'stream_url' => $streamUrl,
+            ]
+        ]);
     }
 }
