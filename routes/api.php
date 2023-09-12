@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\VideoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\StreamController;
+use App\Http\Controllers\UploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +17,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// upload video
+Route::post('video', VideoController::class);
+
+// upload video
+Route::post('upload', UploadController::class);
+
+// stream video
+Route::get('stream/{video}', StreamController::class);
