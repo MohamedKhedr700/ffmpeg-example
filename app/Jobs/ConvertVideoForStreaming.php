@@ -38,10 +38,9 @@ class ConvertVideoForStreaming implements ShouldQueue
 
         $streamPath = $this->video->id.'.m3u8';
 
-
         // create some video formats...
         $lowBitrateFormat = (new X264)->setKiloBitrate(500);
-        //        $midBitrateFormat = (new X264)->setKiloBitrate(1500);
+        $midBitrateFormat = (new X264)->setKiloBitrate(1500);
         //        $highBitrateFormat = (new X264)->setKiloBitrate(3000);
 
         // open the uploaded video from the right disk...
@@ -55,7 +54,7 @@ class ConvertVideoForStreaming implements ShouldQueue
             // we'll add different formats so the stream will play smoothly
             // with all kinds of internet connections...
             ->addFormat($lowBitrateFormat)
-//            ->addFormat($midBitrateFormat)
+            ->addFormat($midBitrateFormat)
 //            ->addFormat($highBitrateFormat)
 
             // call the 'save' method with a filename...

@@ -24,6 +24,6 @@ Route::group([
     // show video details
     Route::get('{id}', ShowVideoController::class);
     // stream video
-    Route::get('{id}/stream', StreamVideoController::class);
+    Route::get('{id}/stream', StreamVideoController::class)->name('video.stream');
 }
 );

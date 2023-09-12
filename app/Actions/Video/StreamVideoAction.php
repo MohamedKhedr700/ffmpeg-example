@@ -2,6 +2,10 @@
 
 namespace App\Actions\Video;
 
+use App\Models\Video;
+use Illuminate\Support\Facades\Storage;
+use ProtoneMedia\LaravelFFMpeg\Support\FFMpeg;
+
 class StreamVideoAction
 {
     /**
@@ -28,13 +32,26 @@ class StreamVideoAction
             return null;
         }
 
-        dd($video);
+        return route('video.stream', $video->stream_path);
+        //        return $this->prepareStream($video);
     }
 
     /**
-     * Get the video.
+     * Prepare the stream.
      */
-    private function getVideoPath(string $video): string
+    private function prepareStream(Video $video)
     {
+        return FFMpeg::dynamicHLSPlaylist($video->stream_disk)
+            ->fromDisk($video->stream_disk)
+            ->open($video->stream_path)
+            ->setKeyUrlResolver(function (string $path) use ($video) {
+                return route('video.key', $video->id);
+            })
+            ->setPlaylistUrlResolver(function (string $path) use ($video) {
+                return route('video.stream', $video->id);
+            })
+            ->setMediaUrlResolver(function (string $path) use ($video) {
+                return Storage::disk($video->stream_disk)->url($path);
+            });
     }
 }

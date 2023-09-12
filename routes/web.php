@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+use ProtoneMedia\LaravelFFMpeg\Support\FFMpeg;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +18,24 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// stream hls playlist
+Route::get('videos/stream/{playlist}', function ($playlist) {
+    return FFMpeg::dynamicHLSPlaylist('stream_videos')
+        ->fromDisk('stream_videos')
+        ->open($playlist)
+        ->setKeyUrlResolver(function (string $key) {
+            return route('video.key', ['key' => $key]);
+        })
+        ->setPlaylistUrlResolver(function (string $playlist) {
+            return route('video.stream', ['playlist' => $playlist]);
+        })
+        ->setMediaUrlResolver(function (string $media) {
+            return Storage::disk('stream_videos')->url($media);
+        });
+})->name('video.stream');
+
+// download hls keys
+Route::get('videos/stream/key/{key}', function ($key) {
+    return Storage::disk('stream_videos')->download($key);
+})->name('video.key');

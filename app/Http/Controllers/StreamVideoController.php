@@ -2,22 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Video\FindVideoAction;
 use App\Actions\Video\StreamVideoAction;
-use App\Http\Resources\VideoResource;
-use Illuminate\Http\JsonResponse;
 
 class StreamVideoController extends Controller
 {
     /**
      * show a resource in storage.
      */
-    public function __invoke(string $id, StreamVideoAction $streamVideoAction): JsonResponse
+    public function __invoke(string $id, StreamVideoAction $streamVideoAction)
     {
-        $video = $streamVideoAction->execute($id);
+        $streamUrl = $streamVideoAction->execute($id);
 
-        return response()->json([
-            'data' => $video ? VideoResource::make($video) : null,
-        ]);
+        return redirect($streamUrl);
     }
 }
