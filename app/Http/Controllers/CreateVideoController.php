@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\CreateVideoAction;
+use App\Actions\Video\CreateVideoAction;
 use App\Http\Requests\StoreVideoRequest;
 use App\Http\Resources\VideoResource;
 use Illuminate\Http\JsonResponse;

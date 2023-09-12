@@ -1,36 +1,29 @@
 <?php
 
-namespace App\Actions;
+namespace App\Actions\Video;
 
-use App\Jobs\ConvertVideoForDownloading;
 use App\Jobs\ConvertVideoForStreaming;
 use App\Models\Video;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Carbon;
 
-class CreateVideoAction
+class CreateVideoAction extends VideoAction
 {
-    /**
-     * Video model instance.
-     */
-    private Video $video;
-
-    /**
-     * Create a new action instance.
-     */
-    public function __construct(Video $video)
-    {
-        $this->video = $video;
-    }
-
     /**
      * Execute the action.
      */
     public function execute(UploadedFile $video, string $title): Video
     {
-        $video = $this->video->create([
-            'disk' => 'local',
+        $uploadDisk = 'upload_videos';
+
+        $uploadPath = Carbon::today()->format('Y-m-d');
+
+        $video->store($uploadPath, $uploadDisk);
+
+        $video = $this->video()->create([
+            'disk' => $uploadDisk,
             'original_name' => $video->getClientOriginalName(),
-            'path' => $video->store('videos/upload'),
+            'path' => $uploadPath,
             'title' => $title,
         ]);
 

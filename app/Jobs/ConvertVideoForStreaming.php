@@ -36,6 +36,9 @@ class ConvertVideoForStreaming implements ShouldQueue
     {
         $streamDisk = 'stream_videos';
 
+        $streamPath = $this->video->id.'.m3u8';
+
+
         // create some video formats...
         $lowBitrateFormat = (new X264)->setKiloBitrate(500);
         //        $midBitrateFormat = (new X264)->setKiloBitrate(1500);
@@ -56,14 +59,14 @@ class ConvertVideoForStreaming implements ShouldQueue
 //            ->addFormat($highBitrateFormat)
 
             // call the 'save' method with a filename...
-            ->save($this->video->id.'.m3u8');
+            ->save($streamPath);
 
         // update the database so we know the convertion is done!
         $this->video->update([
             'stream_disk' => $streamDisk,
-            'stream_strategy' => 'hls',
+            'stream_path' => $streamPath,
             'streamable_at' => Carbon::now(),
-            'stream_path' => $this->video->id.'.m3u8',
+            'stream_strategy' => 'hls',
             'streamable' => true,
         ]);
     }

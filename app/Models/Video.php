@@ -19,6 +19,7 @@ class Video extends Model
         'stream_path',
         'streamable_at',
         'streamable',
+        'download_disk',
         'download_path',
         'downloadable_at',
         'downloadable',

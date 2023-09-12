@@ -17,15 +17,28 @@ class ConvertVideoForDownloading implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $video;
+    /**
+     * The video model instance.
+     */
+    public Video $video;
 
+    /**
+     * Create a new job instance.
+     */
     public function __construct(Video $video)
     {
         $this->video = $video;
     }
 
-    public function handle()
+    /**
+     * Execute the job.
+     */
+    public function handle(): void
     {
+        $downloadDisk = 'download_videos';
+
+        $downloadPath = $this->video->id.'.mp4';
+
         // create a video format...
         $lowBitrateFormat = (new X264)->setKiloBitrate(500);
 
@@ -42,15 +55,18 @@ class ConvertVideoForDownloading implements ShouldQueue
             ->export()
 
             // tell the MediaExporter to which disk and in which format we want to export...
-            ->toDisk('downloadable_videos')
+            ->toDisk($downloadDisk)
             ->inFormat($lowBitrateFormat)
 
             // call the 'save' method with a filename...
-            ->save($this->video->id.'.mp4');
+            ->save($downloadPath);
 
         // update the database so we know the convertion is done!
         $this->video->update([
+            'download_disk' => $downloadDisk,
+            'download_path' => $downloadPath,
             'downloadable_at' => Carbon::now(),
+            'downloadable' => true,
         ]);
     }
 }
