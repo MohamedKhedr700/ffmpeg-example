@@ -59,6 +59,13 @@ return [
             'url' => env('APP_URL').'/videos',
             'visibility' => 'public',
         ],
+
+        'streamable_videos' => [
+            'driver' => 'local',
+            'root' => storage_path('app/streamable_videos'),
+            'url' => env('APP_URL').'/streamable_videos',
+            'visibility' => 'public',
+        ],
     ],
 
     /*

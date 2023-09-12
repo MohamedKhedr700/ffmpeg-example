@@ -29,9 +29,9 @@ class CreateVideoAction
             'title' => $title,
         ]);
 
-        //        $this->convertForStreamAction->execute($video);
+        $this->convertForStreamAction->execute($video);
 
-        //        $this->convertForDownloadAction->execute($video);
+//        $this->convertForDownloadAction->execute($video);
 
         return $video;
     }

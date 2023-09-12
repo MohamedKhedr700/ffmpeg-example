@@ -16,14 +16,23 @@ class ConvertVideoForStreaming implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $video;
+    /**
+     * The video instance.
+     */
+    public Video $video;
 
+    /**
+     * Create a new job instance.
+     */
     public function __construct(Video $video)
     {
         $this->video = $video;
     }
 
-    public function handle()
+    /**
+     * Execute the job.
+     */
+    public function handle(): void
     {
         // create some video formats...
         $lowBitrateFormat = (new X264)->setKiloBitrate(500);

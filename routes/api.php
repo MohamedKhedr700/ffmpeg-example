@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\StreamController;
-use App\Http\Controllers\UploadController;
 use App\Http\Controllers\VideoController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,9 +16,3 @@ use Illuminate\Support\Facades\Route;
 
 // upload video
 Route::post('video', VideoController::class);
-
-// upload video
-Route::post('upload', UploadController::class);
-
-// stream video
-Route::get('stream/{video}', StreamController::class);
