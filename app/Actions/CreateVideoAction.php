@@ -2,19 +2,24 @@
 
 namespace App\Actions;
 
+use App\Jobs\ConvertVideoForDownloading;
+use App\Jobs\ConvertVideoForStreaming;
 use App\Models\Video;
 use Illuminate\Http\UploadedFile;
 
 class CreateVideoAction
 {
     /**
+     * Video model instance.
+     */
+    private Video $video;
+
+    /**
      * Create a new action instance.
      */
-    public function __construct(
-        private readonly Video $video,
-        private readonly ConvertForStreamAction $convertForStreamAction,
-        private readonly ConvertForDownloadAction $convertForDownloadAction
-    ) {
+    public function __construct(Video $video)
+    {
+        $this->video = $video;
     }
 
     /**
@@ -29,9 +34,9 @@ class CreateVideoAction
             'title' => $title,
         ]);
 
-        $this->convertForStreamAction->execute($video);
+        ConvertVideoForStreaming::dispatch($video);
 
-        //        $this->convertForDownloadAction->execute($video);
+//        ConvertVideoForDownloading::dispatch($video);
 
         return $video;
     }
