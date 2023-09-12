@@ -18,12 +18,10 @@ class CreateVideoAction extends VideoAction
 
         $uploadPath = Carbon::today()->format('Y-m-d');
 
-        $video->store($uploadPath, $uploadDisk);
-
         $video = $this->video()->create([
             'disk' => $uploadDisk,
             'original_name' => $video->getClientOriginalName(),
-            'path' => $uploadPath,
+            'path' => $video->store($uploadPath, $uploadDisk),
             'title' => $title,
         ]);
 
