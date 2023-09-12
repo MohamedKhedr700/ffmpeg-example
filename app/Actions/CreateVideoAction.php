@@ -23,9 +23,9 @@ class CreateVideoAction
     public function execute(UploadedFile $video, string $title): Video
     {
         $video = $this->video->create([
-            'disk' => 'videos_disk',
+            'disk' => 'local',
             'original_name' => $video->getClientOriginalName(),
-            'path' => $video->store('upload', 'videos_disk'),
+            'path' => $video->store('videos/upload'),
             'title' => $title,
         ]);
 

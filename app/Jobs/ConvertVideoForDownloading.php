@@ -50,7 +50,7 @@ class ConvertVideoForDownloading implements ShouldQueue
 
         // update the database so we know the convertion is done!
         $this->video->update([
-            'converted_for_downloading_at' => Carbon::now(),
+            'downloadable_at' => Carbon::now(),
         ]);
     }
 }

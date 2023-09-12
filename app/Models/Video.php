@@ -14,15 +14,21 @@ class Video extends Model
         'original_name',
         'disk',
         'path',
-        'converted_for_streaming_at',
-        'converted_for_downloading_at',
+        'stream_disk',
+        'stream_strategy',
+        'stream_path',
+        'streamable_at',
+        'streamable',
+        'download_path',
+        'downloadable_at',
+        'downloadable',
     ];
 
     /**
      * The attributes that should be cast.
      */
     protected $dates = [
-        'converted_for_downloading_at',
-        'converted_for_streaming_at',
+        'streamable_at',
+        'downloadable_at',
     ];
 }

@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\VideoController;
+use App\Http\Controllers\CreateVideoController;
+use App\Http\Controllers\ShowVideoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// upload video
-Route::post('video', VideoController::class);
+Route::group([
+    'prefix' => 'video',
+], function () {
+    // upload video
+    Route::post('/', CreateVideoController::class);
+    // get video
+    Route::get('{id}', ShowVideoController::class);
+}
+);

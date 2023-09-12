@@ -53,17 +53,17 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
         ],
 
-        'videos_disk' => [
+        'upload_videos' => [
             'driver' => 'local',
-            'root' => storage_path('app/videos'),
-            'url' => env('APP_URL').'/videos',
+            'root' => storage_path('app/videos/upload'),
+            'url' => env('APP_URL').'/videos/upload',
             'visibility' => 'public',
         ],
 
-        'streamable_videos' => [
+        'stream_videos' => [
             'driver' => 'local',
-            'root' => storage_path('app/streamable_videos'),
-            'url' => env('APP_URL').'/streamable_videos',
+            'root' => storage_path('app/videos/stream'),
+            'url' => env('APP_URL').'/videos/stream',
             'visibility' => 'public',
         ],
     ],

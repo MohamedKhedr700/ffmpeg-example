@@ -34,10 +34,12 @@ class ConvertVideoForStreaming implements ShouldQueue
      */
     public function handle(): void
     {
+        $streamDisk = 'stream_videos';
+
         // create some video formats...
         $lowBitrateFormat = (new X264)->setKiloBitrate(500);
-        $midBitrateFormat = (new X264)->setKiloBitrate(1500);
-        $highBitrateFormat = (new X264)->setKiloBitrate(3000);
+        //        $midBitrateFormat = (new X264)->setKiloBitrate(1500);
+        //        $highBitrateFormat = (new X264)->setKiloBitrate(3000);
 
         // open the uploaded video from the right disk...
         FFMpeg::fromDisk($this->video->disk)
@@ -45,20 +47,24 @@ class ConvertVideoForStreaming implements ShouldQueue
 
             // call the 'exportForHLS' method and specify the disk to which we want to export...
             ->exportForHLS()
-            ->toDisk('streamable_videos')
+            ->toDisk($streamDisk)
 
             // we'll add different formats so the stream will play smoothly
             // with all kinds of internet connections...
             ->addFormat($lowBitrateFormat)
-            ->addFormat($midBitrateFormat)
-            ->addFormat($highBitrateFormat)
+//            ->addFormat($midBitrateFormat)
+//            ->addFormat($highBitrateFormat)
 
             // call the 'save' method with a filename...
             ->save($this->video->id.'.m3u8');
 
         // update the database so we know the convertion is done!
         $this->video->update([
-            'converted_for_streaming_at' => Carbon::now(),
+            'stream_disk' => $streamDisk,
+            'stream_strategy' => 'hls',
+            'streamable_at' => Carbon::now(),
+            'stream_path' => $this->video->id.'.m3u8',
+            'streamable' => true,
         ]);
     }
 }
