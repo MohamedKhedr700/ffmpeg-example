@@ -4,7 +4,7 @@ namespace App\Actions\Video;
 
 use App\Models\Video;
 
-class ShowVideoAction extends VideoAction
+class FindVideoAction extends VideoAction
 {
     /**
      * Execute the action.

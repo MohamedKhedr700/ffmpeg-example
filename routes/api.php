@@ -22,5 +22,6 @@ Route::group([
     Route::post('/', CreateVideoController::class);
     // get video
     Route::get('{id}', ShowVideoController::class);
+    Route::stream('{id}', ShowVideoController::class);
 }
 );
