@@ -16,7 +16,7 @@ class ShowVideoController extends Controller
         $video = $findVideoAction->execute($id);
 
         return response()->json([
-            'data' => VideoResource::make($video),
+            'data' => $video ? VideoResource::make($video) : null,
         ]);
     }
 }

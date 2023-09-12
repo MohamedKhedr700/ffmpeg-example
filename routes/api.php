@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CreateVideoController;
 use App\Http\Controllers\ShowVideoController;
+use App\Http\Controllers\StreamVideoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,8 +21,9 @@ Route::group([
 ], function () {
     // upload video
     Route::post('/', CreateVideoController::class);
-    // get video
+    // show video details
     Route::get('{id}', ShowVideoController::class);
-    Route::stream('{id}', ShowVideoController::class);
+    // stream video
+    Route::get('{id}/stream', StreamVideoController::class);
 }
 );

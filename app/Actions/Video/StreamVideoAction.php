@@ -27,6 +27,7 @@ class StreamVideoAction
         if (! $video) {
             return null;
         }
+
         dd($video);
     }
 
