@@ -11,6 +11,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
+use ProtoneMedia\LaravelFFMpeg\Exporters\HLSVideoFilters;
 use ProtoneMedia\LaravelFFMpeg\Support\FFMpeg;
 
 class ConvertVideoForStreaming implements ShouldQueue
@@ -39,7 +41,7 @@ class ConvertVideoForStreaming implements ShouldQueue
 
         // create some video formats...
         $lowBitrateFormat = (new X264)->setKiloBitrate(500);
-        $midBitrateFormat = (new X264)->setKiloBitrate(1500);
+//        $midBitrateFormat = (new X264)->setKiloBitrate(1500);
         //        $highBitrateFormat = (new X264)->setKiloBitrate(3000);
 
         // open the uploaded video from the right disk...
@@ -48,12 +50,17 @@ class ConvertVideoForStreaming implements ShouldQueue
 
             // call the 'exportForHLS' method and specify the disk to which we want to export...
             ->exportForHLS()
+            ->withRotatingEncryptionKey(function ($filename, $contents) {
+                Storage::disk(Disk::STREAM_VIDEOS)->put($filename, $contents);
+            })
             ->toDisk(Disk::STREAM_VIDEOS)
 
             // we'll add different formats so the stream will play smoothly
             // with all kinds of internet connections...
-            ->addFormat($lowBitrateFormat)
-            ->addFormat($midBitrateFormat)
+            ->addFormat($lowBitrateFormat, function (HLSVideoFilters $filters) {
+                $filters->resize(640, 480);
+            })
+//            ->addFormat($midBitrateFormat)
 //            ->addFormat($highBitrateFormat)
 
             // call the 'save' method with a filename...
