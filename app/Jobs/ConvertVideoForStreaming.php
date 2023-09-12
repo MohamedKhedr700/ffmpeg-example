@@ -45,7 +45,7 @@ class ConvertVideoForStreaming implements ShouldQueue
         //        $highBitrateFormat = (new X264)->setKiloBitrate(3000);
 
         // open the uploaded video from the right disk...
-        FFMpeg::fromDisk($this->video->disk)
+        FFMpeg::fromDisk(Disk::STREAM_VIDEOS)
             ->open($this->video->path)
 
             // call the 'exportForHLS' method and specify the disk to which we want to export...
