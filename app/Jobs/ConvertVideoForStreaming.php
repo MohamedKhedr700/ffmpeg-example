@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Enum\Disk;
 use App\Models\Video;
 use FFMpeg\Format\Video\X264;
 use Illuminate\Bus\Queueable;
@@ -34,8 +35,6 @@ class ConvertVideoForStreaming implements ShouldQueue
      */
     public function handle(): void
     {
-        $streamDisk = 'stream_videos';
-
         $streamPath = $this->video->id.'.m3u8';
 
         // create some video formats...
@@ -49,7 +48,7 @@ class ConvertVideoForStreaming implements ShouldQueue
 
             // call the 'exportForHLS' method and specify the disk to which we want to export...
             ->exportForHLS()
-            ->toDisk($streamDisk)
+            ->toDisk(Disk::STREAM_VIDEOS)
 
             // we'll add different formats so the stream will play smoothly
             // with all kinds of internet connections...
@@ -62,7 +61,7 @@ class ConvertVideoForStreaming implements ShouldQueue
 
         // update the database so we know the convertion is done!
         $this->video->update([
-            'stream_disk' => $streamDisk,
+            'stream_disk' => Disk::STREAM_VIDEOS,
             'stream_path' => $streamPath,
             'streamable_at' => Carbon::now(),
             'stream_strategy' => 'hls',

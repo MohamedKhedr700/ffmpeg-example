@@ -3,6 +3,7 @@
 namespace App\Actions\Video;
 
 use App\Jobs\ConvertVideoForStreaming;
+use App\Models\Enum\Disk;
 use App\Models\Video;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
@@ -14,14 +15,12 @@ class CreateVideoAction extends VideoAction
      */
     public function execute(UploadedFile $video, string $title): Video
     {
-        $uploadDisk = 'upload_videos';
-
         $uploadPath = Carbon::today()->format('Y-m-d');
 
         $video = $this->video()->create([
-            'disk' => $uploadDisk,
+            'disk' => Disk::UPLOAD_VIDEOS,
             'original_name' => $video->getClientOriginalName(),
-            'path' => $video->store($uploadPath, $uploadDisk),
+            'path' => $video->store($uploadPath, Disk::UPLOAD_VIDEOS),
             'title' => $title,
         ]);
 

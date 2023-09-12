@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Enum\Disk;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use ProtoneMedia\LaravelFFMpeg\Support\FFMpeg;
@@ -15,14 +16,15 @@ use ProtoneMedia\LaravelFFMpeg\Support\FFMpeg;
 |
 */
 
+// welcome page
 Route::get('/', function () {
     return view('welcome');
 });
 
 // stream hls playlist
 Route::get('videos/stream/{playlist}', function ($playlist) {
-    return FFMpeg::dynamicHLSPlaylist('stream_videos')
-        ->fromDisk('stream_videos')
+    return FFMpeg::dynamicHLSPlaylist(Disk::STREAM_VIDEOS)
+        ->fromDisk(Disk::STREAM_VIDEOS)
         ->open($playlist)
         ->setKeyUrlResolver(function (string $key) {
             return route('video.key', ['key' => $key]);
@@ -31,7 +33,7 @@ Route::get('videos/stream/{playlist}', function ($playlist) {
             return route('video.stream', ['playlist' => $playlist]);
         })
         ->setMediaUrlResolver(function (string $media) {
-            return Storage::disk('stream_videos')->url($media);
+            return Storage::disk(Disk::STREAM_VIDEOS)->url($media);
         });
 })->name('video.stream');
 

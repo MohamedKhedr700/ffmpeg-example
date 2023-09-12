@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Enum\Disk;
 use App\Models\Video;
 use FFMpeg\Coordinate\Dimension;
 use FFMpeg\Format\Video\X264;
@@ -35,8 +36,6 @@ class ConvertVideoForDownloading implements ShouldQueue
      */
     public function handle(): void
     {
-        $downloadDisk = 'download_videos';
-
         $downloadPath = $this->video->id.'.mp4';
 
         // create a video format...
@@ -55,7 +54,7 @@ class ConvertVideoForDownloading implements ShouldQueue
             ->export()
 
             // tell the MediaExporter to which disk and in which format we want to export...
-            ->toDisk($downloadDisk)
+            ->toDisk(Disk::DOWNLOAD_VIDEOS)
             ->inFormat($lowBitrateFormat)
 
             // call the 'save' method with a filename...
@@ -63,7 +62,7 @@ class ConvertVideoForDownloading implements ShouldQueue
 
         // update the database so we know the convertion is done!
         $this->video->update([
-            'download_disk' => $downloadDisk,
+            'download_disk' => Disk::DOWNLOAD_VIDEOS,
             'download_path' => $downloadPath,
             'downloadable_at' => Carbon::now(),
             'downloadable' => true,
