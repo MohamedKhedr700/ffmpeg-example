@@ -8,8 +8,21 @@ use App\Models\Video;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Carbon;
 
-class CreateVideoAction extends VideoAction
+class CreateVideoAction
 {
+    /**
+     * Video model instance.
+     */
+    protected Video $video;
+
+    /**
+     * Create a new action instance.
+     */
+    public function __construct(Video $video)
+    {
+        $this->video = $video;
+    }
+
     /**
      * Execute the action.
      */
@@ -17,7 +30,7 @@ class CreateVideoAction extends VideoAction
     {
         $uploadPath = Carbon::today()->format('Y-m-d');
 
-        $video = $this->video()->create([
+        $video = $this->video->create([
             'disk' => Disk::UPLOAD_VIDEOS,
             'original_name' => $video->getClientOriginalName(),
             'path' => $video->store($uploadPath, Disk::UPLOAD_VIDEOS),
