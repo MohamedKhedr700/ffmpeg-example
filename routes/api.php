@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\CreateVideoController;
 use App\Http\Controllers\ShowVideoController;
-use App\Http\Controllers\StreamVideoController;
 use Illuminate\Support\Facades\Route;
 
 /*
