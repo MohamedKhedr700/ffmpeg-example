@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class VideoResource extends JsonResource
 {
@@ -17,6 +18,7 @@ class VideoResource extends JsonResource
             'original_name' => (string) $this->original_name,
             'streamable' => (bool) $this->streamable,
             'stream_strategy' => (string) $this->stream_strategy,
+            'stream_link' => Storage::disk($this->stream_disk)->url($this->stream_path),
         ];
     }
 }

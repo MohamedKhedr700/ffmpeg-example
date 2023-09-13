@@ -23,7 +23,4 @@ Route::group([
     Route::post('/', CreateVideoController::class);
     // show video details
     Route::get('{id}', ShowVideoController::class);
-    // stream video
-    Route::get('{id}/stream', StreamVideoController::class);
-}
-);
+});
