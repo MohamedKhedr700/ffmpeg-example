@@ -41,11 +41,11 @@ class ConvertVideoForStreaming implements ShouldQueue
 
         // create some video formats...
         $lowBitrateFormat = (new X264)->setKiloBitrate(500);
-        //        $midBitrateFormat = (new X264)->setKiloBitrate(1500);
-        //        $highBitrateFormat = (new X264)->setKiloBitrate(3000);
+        $midBitrateFormat = (new X264)->setKiloBitrate(1500);
+        $highBitrateFormat = (new X264)->setKiloBitrate(3000);
 
         // open the uploaded video from the right disk...
-        FFMpeg::fromDisk(Disk::STREAM_VIDEOS)
+        FFMpeg::fromDisk(Disk::UPLOAD_VIDEOS)
             ->open($this->video->path)
 
             // call the 'exportForHLS' method and specify the disk to which we want to export...
@@ -57,11 +57,9 @@ class ConvertVideoForStreaming implements ShouldQueue
 
             // we'll add different formats so the stream will play smoothly
             // with all kinds of internet connections...
-            ->addFormat($lowBitrateFormat, function (HLSVideoFilters $filters) {
-                $filters->resize(640, 480);
-            })
-//            ->addFormat($midBitrateFormat)
-//            ->addFormat($highBitrateFormat)
+            ->addFormat($lowBitrateFormat)
+            ->addFormat($midBitrateFormat)
+            ->addFormat($highBitrateFormat)
 
             // call the 'save' method with a filename...
             ->save($streamPath);
