@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Video;
+namespace App\Actions;
 
 use App\Jobs\ConvertVideoForStreaming;
 use App\Models\Enum\Disk;

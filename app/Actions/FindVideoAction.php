@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Actions\Video;
+namespace App\Actions;
 
 use App\Models\Video;
 

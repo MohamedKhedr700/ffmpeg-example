@@ -39,5 +39,5 @@ Route::get('videos/stream/{playlist}', function ($playlist) {
 
 // download hls keys
 Route::get('videos/stream/key/{key}', function ($key) {
-    return Storage::disk('stream_videos')->download($key);
+    return Storage::disk(Disk::STREAM_VIDEOS)->download($key);
 })->name('video.key');

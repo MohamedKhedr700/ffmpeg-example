@@ -5,9 +5,9 @@ namespace App\Models\Enum;
 class Disk
 {
     /**
-     * The disk name for the video downloads.
+     * The disk name for the video uploads.
      */
-    public const DOWNLOAD_VIDEOS = 'download_videos';
+    public const UPLOAD_VIDEOS = 'upload_videos';
 
     /**
      * The disk name for the video streams.
@@ -15,7 +15,7 @@ class Disk
     public const STREAM_VIDEOS = 'stream_videos';
 
     /**
-     * The disk name for the video uploads.
+     * The disk name for the video downloads.
      */
-    public const UPLOAD_VIDEOS = 'upload_videos';
+    public const DOWNLOAD_VIDEOS = 'download_videos';
 }
